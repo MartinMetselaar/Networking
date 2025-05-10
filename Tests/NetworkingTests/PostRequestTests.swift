@@ -313,7 +313,7 @@ class PostRequestTests: XCTestCase {
         waitForExpectations(timeout: 0.1)
     }
     
-    func testAsyncPostEncodable() async throws {
+    func testPOSTAsyncEncodable() async throws {
         MockingURLProtocol.mockedResponse =
             """
             { "response": "OK" }

@@ -26,6 +26,10 @@ public extension NetworkingClient {
         request(.put, route, params: params).publisher()
     }
 
+    func put(_ route: String, body: Encodable) -> AnyPublisher<Data, Error> {
+        request(.put, route, encodableBody: body).publisher()
+    }
+
     func patch(_ route: String, params: Params = Params()) -> AnyPublisher<Data, Error> {
         request(.patch, route, params: params).publisher()
     }
@@ -36,6 +40,10 @@ public extension NetworkingClient {
 
     func delete(_ route: String, params: Params = Params()) -> AnyPublisher<Data, Error> {
         request(.delete, route, params: params).publisher()
+    }
+
+    func delete(_ route: String, body: Encodable) -> AnyPublisher<Data, Error> {
+        request(.delete, route, encodableBody: body).publisher()
     }
 }
 
@@ -56,12 +64,24 @@ public extension NetworkingClient {
     func put(_ route: String, params: Params = Params()) async throws -> Data {
         try await request(.put, route, params: params).execute()
     }
-    
+
+    func put(_ route: String, body: Encodable) async throws -> Data {
+        try await request(.put, route, encodableBody: body).execute()
+    }
+
     func patch(_ route: String, params: Params = Params()) async throws -> Data {
         try await request(.patch, route, params: params).execute()
     }
-    
+
+    func patch(_ route: String, body: Encodable) async throws -> Data {
+        try await request(.patch, route, encodableBody: body).execute()
+    }
+
     func delete(_ route: String, params: Params = Params()) async throws -> Data {
         try await request(.delete, route, params: params).execute()
+    }
+
+    func delete(_ route: String, body: Encodable) async throws -> Data {
+        try await request(.delete, route, encodableBody: body).execute()
     }
 }

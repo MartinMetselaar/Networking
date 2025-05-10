@@ -26,6 +26,10 @@ public extension NetworkingClient {
         put(route, params: params).toJSON()
     }
 
+    func put(_ route: String, body: Encodable) -> AnyPublisher<Any, Error> {
+        put(route, body: body).toJSON()
+    }
+
     func patch(_ route: String, params: Params = Params()) -> AnyPublisher<Any, Error> {
         patch(route, params: params).toJSON()
     }
@@ -36,6 +40,10 @@ public extension NetworkingClient {
 
     func delete(_ route: String, params: Params = Params()) -> AnyPublisher<Any, Error> {
         delete(route, params: params).toJSON()
+    }
+
+    func delete(_ route: String, body: Encodable) -> AnyPublisher<Any, Error> {
+        delete(route, body: body).toJSON()
     }
 }
 
@@ -64,7 +72,13 @@ public extension NetworkingClient {
         let data = try await req.execute()
         return try JSONSerialization.jsonObject(with: data, options: [])
     }
-    
+
+    func put(_ route: String, body: Encodable) async throws -> Any {
+        let req = request(.put, route, encodableBody: body)
+        let data = try await req.execute()
+        return try JSONSerialization.jsonObject(with: data, options: [])
+    }
+
     func patch(_ route: String, params: Params = Params()) async throws -> Any {
         let req = request(.patch, route, params: params)
         let data = try await req.execute()
@@ -79,6 +93,12 @@ public extension NetworkingClient {
     
     func delete(_ route: String, params: Params = Params()) async throws -> Any {
         let req = request(.delete, route, params: params)
+        let data = try await req.execute()
+        return try JSONSerialization.jsonObject(with: data, options: [])
+    }
+
+    func delete(_ route: String, body: Encodable) async throws -> Any {
+        let req = request(.delete, route, encodableBody: body)
         let data = try await req.execute()
         return try JSONSerialization.jsonObject(with: data, options: [])
     }
